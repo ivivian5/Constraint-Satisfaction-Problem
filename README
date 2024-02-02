@@ -1,0 +1,69 @@
+Assignment: A4 - Sudoku Solver
+Author: Vivian Lau (vlau02)
+Date: 11.17.2023
+-----------------------------------------------------------------------------------
+
+NOTE: Assignment used a 4-day extension granted by the Professor
+
+-----------------------------------------------------------------------------------
+How to Run:
+-----------------------------------------------------------------------------------
+    python3 main.py 
+        or
+    python3 main.py < test.txt
+    
+(Note) needs user input for selecting which sudoku puzzle to run solver on (easy,
+    hard, or custom)
+(Another note) I have provided 3 extra custom sudoku puzzles for testing in the 
+    form of .txt files
+
+-----------------------------------------------------------------------------------
+Assumptions:
+-----------------------------------------------------------------------------------
+    Assumes only needs to find one solution to the sudoku board and not all if 
+    there are multiple solutions.
+
+-----------------------------------------------------------------------------------
+Files:
+-----------------------------------------------------------------------------------
+        test.txt - Input for testing of a very hard challenging sudoku board
+        (Reference) - Created by Finnish Mathematician, Arto Inkala,
+            https://www.quora.com/What-is-the-toughest-sudoku-in-world
+    ...............................................................................
+        test_empty.txt - Input for testing of an empty sudoku board
+    ...............................................................................
+        test_fail.txt - Input for testing of an unsolvable sudoku board
+    ...............................................................................
+        test_bad.txt - Input for invalid sudoku board that breaks constraints
+            and uses the same number multiple times in a row
+    ...............................................................................
+        Sudoku_Solver.py - Uses the Constraint Satisfaction Problem approach, which 
+                uses recursive backtracking and forward checking to find a solution
+                for the specified sudoku board
+    ...............................................................................
+        main.py - Prompts user for sudoku board input and runs the sudoku solver
+                to print out a solution (or no solution if invalid/unsolvable).
+
+-----------------------------------------------------------------------------------
+Solution Structure:
+
+The Sudoku Solver takes in the board and keeps track of the state as a global
+variable in addition to the possible values each element could be and the number of
+elements that are currently empty. The given board is then verified to be valid 
+under all constraints that there are no duplicate numbers in a single row, column,
+or subsequence before starting the recursive backtracking. 
+    The recursive solver function is called each time a new square is considered 
+for filling, starting with the (0,0) square. After checking that the board currently 
+has a solution, the square is then filled with a possible value using forward checking 
+to eliminate the possibility of using this value in other squares of the same 
+constraint before recursing to find a solution for the next square. This guarantees
+that the possible values for each element never violates the constraints. If the 
+recursive path of trying values fills up the entire board, a solution is found, 
+otherwise if any square runs out of possible values to be filled with, there is no 
+solution for the current state of the board and the solver would backtrack to a 
+previous state (restoring possible values for each element and state of the board) 
+before trying other values for previous elements. This recursive solver runs until 
+the board is completely filled or the possible values for each element is fully 
+explored and no solution is found.
+
+-----------------------------------------------------------------------------------
